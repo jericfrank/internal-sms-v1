@@ -1,0 +1,23 @@
+{
+  "name": "internal-sms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hapi-swagger": "^7.7.1",
+    "inert": "^4.2.1",
+    "nodemon": "^1.11.0",
+    "vision": "^4.1.1"
+  },
+  "dependencies": {
+    "hapi": "^16.5.2",
+    "mysql2": "^1.4.1",
+    "sequelize": "^4.6.0"
+  }
+}
