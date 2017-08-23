@@ -2,7 +2,7 @@ const joi = require( 'joi' );
 
 module.exports = {
   'method' : 'POST',
-  'path'   : '/',
+  'path'   : '/sms',
   'config' : {
     'description' : 'Send new sms to multiple receipts',
     'notes'       : 'Returns a success message',

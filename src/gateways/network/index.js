@@ -2,7 +2,8 @@
 
 exports.register = ( server, options, next ) => {
 	server.route( [
-		require( './get-all' )
+		require( './get-all' ),
+		require( './create' )
 	] );
 
 	next();

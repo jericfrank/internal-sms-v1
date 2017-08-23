@@ -1,6 +1,6 @@
 module.exports = {
   method : 'GET',
-  path   : '/',
+  path   : '/sms',
   config : {
     description : 'Fetch all',
     notes       : 'Returns array of object',
