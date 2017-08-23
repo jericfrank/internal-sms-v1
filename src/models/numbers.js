@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function ( sequelize, DataTypes ) {
-	const schema = sequelize.define( 'networks', {
+	const schema = sequelize.define( 'numbers', {
 		'id' : {
 			'type'          : DataTypes.INTEGER,
 			'primaryKey'    : true,
@@ -9,9 +9,14 @@ module.exports = function ( sequelize, DataTypes ) {
 			'autoIncrement' : true
 		},
 
-		'name' : {
-			'type'  : DataTypes.STRING,
-			'field' : 'name'
+		'number' : {
+			'type'  : DataTypes.INTEGER,
+			'field' : 'number'
+		},
+
+		'network_id' : {
+			'type'  : DataTypes.INTEGER,
+			'field' : 'network_id'
 		},
 
 		'created_by' : {
@@ -28,7 +33,7 @@ module.exports = function ( sequelize, DataTypes ) {
 	}, {
 
 		// define the table's name
-		'tableName' : 'networks',
+		'tableName' : 'numbers',
 
 		// Disable the modification for table names
 		// By default, sequelize will automatically

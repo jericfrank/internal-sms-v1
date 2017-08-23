@@ -16,6 +16,7 @@
     "vision": "^4.1.1"
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
     "hapi": "^16.5.2",
     "mysql2": "^1.4.1",
     "sequelize": "^4.6.0"
