@@ -10,9 +10,9 @@ module.exports = {
 	
 	'swagger' : {
 		'info' : {
-			'title'       : 'Sample Project',
+			'title'       : '1722 Internal Sms',
 			'version'     : pack.version,
-			'description' : 'Backend service for sample project microservice architecture.'
+			'description' : 'Microservice for internal sms.'
 		},
 		'swaggerUIPath'     : '/api/',
 		'jsonPath'          : '/api/swagger.json',

@@ -45,7 +45,7 @@ models.sequelize.sync().then( () => {
 					return;
 				}
 
-				console.log( `Sample Project is running at: ${server.info.uri}` );
+				console.log( `Server is running at: ${server.info.uri}` );
 			} );
 	} );
 

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function ( sequelize, DataTypes ) {
-	const schema = sequelize.define( 'networks', {
+	const networks = sequelize.define( 'networks', {
 		'id' : {
 			'type'          : DataTypes.INTEGER,
 			'primaryKey'    : true,
@@ -45,5 +45,19 @@ module.exports = function ( sequelize, DataTypes ) {
 		'paranoid' : true
 	} );
 
-	return schema;
+	networks.associate = function (models) {
+		networks.hasMany( models.numbers, {
+			'foreignKey' : 'network_id',
+			'as'         : 'numbers'
+		} );
+	};
+
+	networks.joinNumbers = function(models) {
+		return {
+        	'model' : models.numbers,
+        	'as'    : 'numbers'
+ 		};
+	};
+
+	return networks;
 };
