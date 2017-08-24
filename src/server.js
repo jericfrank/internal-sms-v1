@@ -33,7 +33,8 @@ models.sequelize.sync().then( () => {
 	server.register( [
 			{ 'register' : require( './gateways/sms' ) },
 			{ 'register' : require( './gateways/network' ) },
-			{ 'register' : require( './gateways/numbers' ) }
+			{ 'register' : require( './gateways/numbers' ) },
+			{ 'register' : require( './gateways/repeaters' ) }
 		], err => {
 			if ( err ) {
 				console.log( err, 'Unable to register plugins' );
