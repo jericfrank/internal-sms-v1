@@ -1,3 +1,4 @@
+const joi  = require( 'joi' );
 const boom = require( 'boom' );
 
 const co       = use( 'utils/co' );
@@ -14,6 +15,13 @@ module.exports = {
     'notes'       : 'Returns array of object',
     'tags'        : [ 'api' ],
     
+    'response'    : {
+      'schema' : joi.object().keys( {
+        'statusCode' : joi.number().description( 'response status' ).example( 200 ),
+        'data'       : joi.array().items( joi.object() )
+      } )
+    },
+
     'handler' : co( function* ( request, reply ) {
       try {
         const options = {
@@ -24,7 +32,7 @@ module.exports = {
 
         const networks = yield Networks.findAll( options );        
 
-        return response.created( reply, networks );
+        return response.success( reply, networks );
       } catch ( err ) {
         return reply( boom.badImplementation() );
       }

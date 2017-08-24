@@ -32,6 +32,7 @@ module.exports = {
         }
       }
     },
+    
     'validate' : {
       'payload' : {
         'number' : joi.array().required().items( joi.number().integer().required() ).description( 'array of numbers for this network' ),
