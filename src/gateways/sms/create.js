@@ -59,14 +59,9 @@ module.exports = {
             'messageid' : cuid()
           });
 
-          const omitted = _.omit( created_sms.toJSON(), [
-            'updated_by',
-            'created_by',
-            'id',
-            'text',
-            'recipient',
-            'updated_at',
-            'created_at'
+          const omitted = _.pick( created_sms.toJSON(), [
+            'status',
+            'messageid'
           ]);
 
           return_data.push( omitted );

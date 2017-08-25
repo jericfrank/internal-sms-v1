@@ -2,7 +2,8 @@
 
 exports.register = ( server, options, next ) => {
 	server.route( [
-		require( './create' )
+		require( './create' ),
+		require( './update-by-messageid' )
 	] );
 
 	next();
