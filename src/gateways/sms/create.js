@@ -1,13 +1,16 @@
 const _    = require( 'lodash' );
 const joi  = require( 'joi' );
 const boom = require( 'boom' );
+const cuid = require('cuid');
 
 const co       = use( 'utils/co' );
 const response = use( 'utils/response' );
 const models   = use( 'models' );
 
-const Networks = models.networks;
-const Numbers  = models.numbers;
+const Networks  = models.networks;
+const Numbers   = models.numbers;
+const Repeaters = models.repeaters;
+const Sms       = models.sms;
 
 module.exports = {
   'method' : 'POST',
@@ -20,7 +23,7 @@ module.exports = {
     'response'    : {
       'schema' : joi.object().keys( {
         'statusCode' : joi.number().description( 'response status' ).example( 201 ),
-        'data'       : joi.object()
+        'data'       : joi.array()
       } )
     },
 
@@ -34,7 +37,7 @@ module.exports = {
     },
     'validate'    : {
       'payload' : {
-        'recipients' : joi.array().required().description( 'array of receipts' ),
+        'recipients' : joi.array().required().items( joi.string().regex(/^(\+639)\d{9}$/) ).description( 'array of receipts' ),
         'body'       : joi.string().required().description( 'string text message' )
       }
     },
@@ -45,7 +48,29 @@ module.exports = {
 
         const recipients = payload.recipients;
 
+        const return_data = [];
+
         for (let i = recipients.length - 1; i >= 0; i--) {
+          // save sms to db
+          const created_sms = yield Sms.create({
+            'text'      : payload.body,
+            'recipient' : recipients[i],
+            'status'    : 0, //processing,
+            'messageid' : cuid()
+          });
+
+          const omitted = _.omit( created_sms.toJSON(), [
+            'updated_by',
+            'created_by',
+            'id',
+            'text',
+            'recipient',
+            'updated_at',
+            'created_at'
+          ]);
+
+          return_data.push( omitted );
+
           const number = recipients[i].slice( 3, 6 );
 
           const network = yield Numbers.findOne( {
@@ -55,17 +80,23 @@ module.exports = {
           } );
 
           if ( network ) {
-            // partial part
-            console.log( network.toJSON() );
-          } 
+            const { network_id } = network.toJSON();
+            
+            const repeater = yield Repeaters.findOne({
+              'where' : {
+                'network_id' : network_id
+              }
+            });
+            // emit socket logic
+            // console.log( repeater.toJSON() );
+          }
         }
 
-        return response.created( reply, {} );
+        return response.created( reply, return_data );
       } catch ( err ) {
 
         return reply( boom.badImplementation() );
       }
     } )
-
   }
 };
