@@ -23,11 +23,11 @@ module.exports = {
 			'replacement' : ''
 		} ],
 		'tags' : [ {
-			'name'        : 'users',
-			'description' : 'User resource'
+			'name'        : 'sms',
+			'description' : 'Sms resource'
 		}, {
-			'name'        : 'books',
-			'description' : 'Book resource'
+			'name'        : 'networks',
+			'description' : 'Networks resource'
 		} ]
 	},
 
@@ -37,7 +37,7 @@ module.exports = {
 		'name'     : process.env.DB_DATABASE,
 		'options'  : {
 			'host'    : process.env.DB_HOST,
-			'dialect' : 'mysql'
+			'dialect' : process.env.DB_DIALECT
 		}
 	},
 };

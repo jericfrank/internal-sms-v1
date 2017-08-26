@@ -2,7 +2,7 @@
 
 const Hapi = require('hapi');
 
-const config = require( './config' );
+const config = require( '../config' );
 const models = require( './models' );
 
 // Create a server with a host and port
