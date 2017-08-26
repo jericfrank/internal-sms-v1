@@ -5,7 +5,7 @@ const pack = require( '../package' );
 module.exports = {
 	'app' : {
 		'host' : '0.0.0.0',
-		'port' : process.env.APP_PORT || 3000
+		'port' : process.env.PORT || 3000
 	},
 	
 	'swagger' : {
