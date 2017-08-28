@@ -21,10 +21,7 @@ module.exports = {
     'tags'        : [ 'api' ],
     
     'response'    : {
-      'schema' : joi.object().keys( {
-        'statusCode' : joi.number().description( 'response status' ).example( 201 ),
-        'data'       : joi.array()
-      } )
+      'schema' : joi.array()
     },
 
     'plugins' : {
@@ -59,12 +56,18 @@ module.exports = {
             'messageid' : cuid()
           });
 
-          const omitted = _.pick( created_sms.toJSON(), [
-            'status',
-            'messageid'
-          ]);
+          // const omitted = _.pick( created_sms.toJSON(), [
+          //   'status',
+          //   'messageid'
+          // ]);
 
-          return_data.push( omitted );
+          const obj = {
+            'status'    : 'processing',
+            'messageId' : created_sms.toJSON().messageid,
+            'to'        : recipients[i]
+          };
+
+          return_data.push( obj );
 
           const number = recipients[i].slice( 3, 6 );
 
@@ -87,7 +90,7 @@ module.exports = {
           }
         }
 
-        return response.created( reply, return_data );
+        return reply( return_data );
       } catch ( err ) {
 
         return reply( boom.badImplementation() );
