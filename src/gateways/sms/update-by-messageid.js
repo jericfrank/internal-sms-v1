@@ -34,7 +34,6 @@ module.exports = {
     
     'validate' : {
       'payload' : {
-        'messageid' : joi.string().required().description( 'sms messageid' ),
         'status'    : joi.number().integer().required().description( 'status number' )
       }
     },
@@ -43,26 +42,25 @@ module.exports = {
       try {
         const { payload, params } = request;
 
-        // const sms = yield Sms.findOne({
-        //   'where' : {
-        //     'messageid' : params.messageid
-        //   }
-        // });
+        yield Sms.update({
+          'status' : payload.status
+        }, {
+          'where' : {
+            'messageid' : params.messageid
+          }
+        } );
 
-        // console.log( sms.toJSON() );
-        // if ( !sms ) {
-        //   return reply( boom.badImplementation() );
-        // }
+        const sms = yield Sms.findOne({
+          'where' : {
+            'messageid' : params.messageid
+          }
+        });
 
-        // const updated_sms = yield Sms.update({
-        //   'messageid' : params.messageid
-        // }, { 
-        //   'fields' : { 
-        //     'status' : payload.status
-        //   }
-        // } );
-
-        return response.success( reply, {} );
+        if ( !sms ) {
+          return reply( boom.badImplementation() );
+        }
+        
+        return response.success( reply, sms );
       } catch ( err ) {
 
         return reply( boom.badImplementation() );
