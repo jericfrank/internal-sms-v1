@@ -31,6 +31,14 @@ if ( process.env.NODE_ENV !== 'production' ) {
 models.sequelize.sync().then( () => {
 
 	server.register( [
+			{
+				'register' : require( 'hapi-io' ),
+				'options'  : {
+					'socketio' : {
+						'path' : '/socket.io'
+					}
+				}
+			},
 			{ 'register' : require( './gateways/sms' ) },
 			{ 'register' : require( './gateways/network' ) },
 			{ 'register' : require( './gateways/numbers' ) },
@@ -49,6 +57,21 @@ models.sequelize.sync().then( () => {
 
 				console.log( `Server is running at: ${server.info.uri}` );
 			} );
+	} );
+
+	server.views( {
+		'engines' : { 'html' : require( 'handlebars' ) },
+		'path'    : __dirname
+	} );
+
+	server.route( {
+		'method' : 'GET',
+		'path'   : '/test-socket',
+
+		handler ( request, reply ) {
+			const host = request.headers.host;
+			reply.view( 'test-socket', { host } );
+		}
 	} );
 
 } )

@@ -55,12 +55,7 @@ module.exports = {
             'status'    : 0, //processing,
             'messageid' : cuid()
           });
-
-          // const omitted = _.pick( created_sms.toJSON(), [
-          //   'status',
-          //   'messageid'
-          // ]);
-
+          
           const obj = {
             'status'    : 'processing',
             'messageId' : created_sms.toJSON().messageid,
@@ -85,8 +80,11 @@ module.exports = {
                 'network_id' : network_id
               }
             });
-            // emit socket logic
-            // console.log( repeater.toJSON() );
+
+            const io       = request.server.plugins[ 'hapi-io' ].io;
+            const { imei } = repeater.toJSON();
+
+            io.emit( imei, obj );
           }
         }
 

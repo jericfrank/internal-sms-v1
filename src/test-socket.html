@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Socket.IO imei</title>
+	</head>
+	<body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+		<script>
+			(function () {
+				var imei = prompt("Input device imei", "cccceee122342rwerwxxpx00xx");
+
+				var socket = io( '{{ host }}', {
+					'path' : '/socket.io'
+				} );
+
+				socket.on( imei, function ( msg ) {
+					// intendend for debugging purposes
+					console.log( msg );
+				} );
+			})();
+		</script>
+	</body>
+</html>
