@@ -34,7 +34,7 @@ module.exports = {
     },
     'validate'    : {
       'payload' : {
-        'recipients' : joi.array().required().items( joi.string().regex(/^(\+639)\d{9}$/) ).description( 'array of receipts' ),
+        'recipients' : joi.array().required().items( joi.string().required().regex(/^(\+639)\d{9}$/) ).description( 'array of receipts' ),
         'body'       : joi.string().required().description( 'string text message' )
       }
     },
