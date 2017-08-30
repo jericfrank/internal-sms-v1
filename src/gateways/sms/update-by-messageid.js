@@ -60,6 +60,12 @@ module.exports = {
           return reply( boom.badImplementation() );
         }
         
+        const io = request.server.plugins[ 'hapi-io' ].io;
+
+        const { messageid, status } = sms.toJSON();
+
+        io.emit( 'sms_internal', { messageid, status } );
+
         return response.success( reply, sms );
       } catch ( err ) {
 

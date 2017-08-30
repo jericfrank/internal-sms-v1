@@ -81,15 +81,18 @@ module.exports = {
               }
             });
 
-            const io       = request.server.plugins[ 'hapi-io' ].io;
-            const { imei } = repeater.toJSON();
+            if ( repeater ) {
+              const io       = request.server.plugins[ 'hapi-io' ].io;
+              const { imei } = repeater.toJSON();
 
-            io.emit( imei, obj );
+              io.emit( imei, obj );
+            }
           }
         }
 
         return reply( return_data );
       } catch ( err ) {
+        console.log( err );
 
         return reply( boom.badImplementation() );
       }
