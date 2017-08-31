@@ -34,7 +34,7 @@ module.exports = {
     
     'validate' : {
       'payload' : {
-        'status'    : joi.number().integer().required().description( 'status number' )
+	'status'    : joi.string().required().description( 'status sent or failed' )
       }
     },
 
